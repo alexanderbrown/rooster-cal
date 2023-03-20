@@ -1,6 +1,9 @@
 import Head from 'next/head'
 
-export default function Home() {
+import { IUser, User } from '@/data/models/User'
+import dbConnect from '@/data/lib/connect'
+
+export default function Home({users}: {users: IUser[]}) {
   return (
     <>
       <Head>
@@ -11,9 +14,25 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <p className='bg-slate-800 text-stone-50'>Hello World</p>
+          <ul className='list-disc'>
+            {users.map(user => <li key={user.email}>{user.email}</li>)}
+          </ul>
         </div>
       </main>
     </>
   )
+}
+
+export async function getServerSideProps() {
+  await dbConnect()
+
+  const result = await User.find({})
+  const users = result.map((doc) => {
+    let user = doc.toObject()
+    user._id = user._id.toString()
+    return user
+  })
+
+  return { props: { users } }
+
 }
