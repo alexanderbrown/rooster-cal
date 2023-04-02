@@ -1,12 +1,11 @@
 import Head from 'next/head'
-import { useSession, signIn, signOut } from 'next-auth/react';
-import Main from '@/components/main';
+import { useSession } from 'next-auth/react';
 
-// import { IUser, User } from '@/data/models/User'
-// import dbConnect from '@/data/lib/connect'
+import ConfigForm from '@/components/ConfigForm';
+import Login from '@/components/Login';
 
-// export default function Home({users}: {users: IUser[]}) {
 export default function Home() {
+  const { data, status } = useSession();
   return (
     <>
       <Head>
@@ -17,26 +16,16 @@ export default function Home() {
       </Head>
       <main>
         <div>
-          <Main />
-          {/* <ul className='list-disc'>
-            {users.map(user => <li key={user.email}>{user.email}</li>)}
-          </ul> */}
+          <nav className='flex flex-row-reverse items-center flex-wrap bg-blue-100 p-1 '>
+              <Login />
+          </nav>
+          {(status==='authenticated') && 
+            <div className="w-full h-screen bg-gray-100" >
+              <ConfigForm />
+            </div>
+          }
         </div>
       </main>
     </>
   )
 }
-
-// export async function getServerSideProps() {
-//   await dbConnect()
-
-//   const result = await User.find({})
-//   const users = result.map((doc) => {
-//     let user = doc.toObject()
-//     user._id = user._id.toString()
-//     return user
-//   })
-
-//   return { props: { users } }
-
-// }

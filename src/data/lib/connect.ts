@@ -1,5 +1,8 @@
 import * as dotenv from 'dotenv'
 import { connect, ConnectOptions } from 'mongoose'
+import { NextApiRequest } from 'next'
+import { getToken } from 'next-auth/jwt'
+import { getSession } from 'next-auth/react'
 
 dotenv.config()
 
@@ -45,4 +48,20 @@ async function dbConnect() {
   return cached.conn
 }
 
-export default dbConnect;
+async function jwtDbConnect(req: NextApiRequest) {
+  const session = await getSession ({ req });
+  if (!session) {
+    return null;
+  }
+  const token = await getToken({ req });
+
+  if (token) {
+    await dbConnect()
+    return token;
+  }
+
+  return undefined
+}
+
+export default jwtDbConnect;
+export {dbConnect}
