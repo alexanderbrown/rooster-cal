@@ -2,8 +2,8 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image'
 import { useState } from 'react';
 
-import googleSigninImage from '../../public/btn_google_signin_light_normal_web.png'
-import googleSigninImagePressed from '../../public/btn_google_signin_light_pressed_web.png'
+import googleSigninImage from '../../../public/btn_google_signin_light_normal_web.png'
+import googleSigninImagePressed from '../../../public/btn_google_signin_light_pressed_web.png'
 
 
 export default function Login() {

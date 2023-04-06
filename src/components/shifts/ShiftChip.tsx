@@ -24,7 +24,7 @@ export default function ShiftChip({shift, removeShift, setEditShiftVisibility, s
     }
 
     return (
-        <div className= {chipColor + ' rounded-lg w-full py-1 px-4 min-w-[10rem] border flex flex-row justify-between items-center shadow-md cursor-default'} 
+        <div className= {chipColor + ' rounded-lg w-full py-1 px-4 min-w-[10rem] border flex flex-row justify-between items-center shadow-md cursor-default hover:shadow-xl'} 
              onClick={()=>{
                 setEditShiftVisibility(prev => {
                     setEditShiftInfo(shift)

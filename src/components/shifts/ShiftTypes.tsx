@@ -33,7 +33,7 @@ export default function ShiftTypes({shifts, setRota, setEditShiftVisibility, set
                                 setEditShiftInfo={setEditShiftInfo} />
                 })}
             <span></span>
-            <div className= 'text-slate-800 border-slate-600 rounded-md w-fit py-1 px-4 border shadow-md text-md font-bold cursor-pointer hover:border-slate-800 hover:bg-slate-300'
+            <div className= 'text-slate-800 border-slate-400 rounded-md w-fit py-1 px-4 border shadow-md text-md font-bold cursor-pointer hover:border-slate-400 hover:bg-slate-100 hover:shadow-lg'
                  onClick={() => {
                     setEditShiftMode("Add")
                     setEditShiftVisibility(prev => !prev)}

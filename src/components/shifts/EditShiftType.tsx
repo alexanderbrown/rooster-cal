@@ -1,9 +1,9 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 
 import * as types from '@/types'
-import Label from "../forms/Label";
-import Input from "../forms/Input";
-import Checkbox from "../forms/Checkbox";
+import Label from "../Label";
+import Input from "../Input";
+import Checkbox from "../Checkbox";
 
 
 export default function EditShiftType(
@@ -70,7 +70,11 @@ export default function EditShiftType(
                     <Label htmlFor="name">Shift Name</Label>
                     <Input type="text" name="name" onChange={handleChange} value={info.name}/>
                     <Label htmlFor="string">String to match</Label>
-                    <Input type="text" name="string" onChange={handleChange} value={info.string}/>
+                    <Input type="text" name="string" onChange={handleChange} value={info.string}
+                           tooltip_content="Entries on the sheet starting with this string will be matched to this shift<br><br>
+                                            For example, if you set this to 'LD', this would match any <br>
+                                            entry in the sheet that began with 'LD' such as 'LD - swapped in'.<br>
+                                            If there is any extra information this will be copied in to the event. "/>
                     <Label htmlFor="allday">All Day?</Label>
                     <Checkbox name="allday" onChange={handleChange} checked={info.allday}/>
                     <Label disabled={info.allday} htmlFor="start">Start Time</Label>
@@ -79,7 +83,7 @@ export default function EditShiftType(
                     <Input disabled={info.allday} type="number" step={0.1} name="duration" onChange={handleChange} value={info.duration}/>
 
                     <div className="flex items-center justify-between mt-4">
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        <button className="bg-gray-50 shadow-md border font-bold py-2 px-4 rounded focus:outline-none hover:shadow-lg hover:bg-white"
                                 type="button" onClick={() => {
                                 if (info.allday) {
                                     setInfo({ ...info, start: undefined, duration:undefined })
@@ -94,7 +98,7 @@ export default function EditShiftType(
                             }}>
                             {mode}
                         </button>
-                        <button className="bg-slate-200 hover:bg-slate-400 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        <button className="bg-gray-300 shadow-md border font-bold py-2 px-4 rounded focus:outline-none  hover:bg-gray-200 hover:shadow-lg"
                                 type="button" onClick={() => {
                                 setInfo(types.BLANKSHIFT)
                                 setVisible(false)

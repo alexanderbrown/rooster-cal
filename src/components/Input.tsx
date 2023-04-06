@@ -7,9 +7,10 @@ interface InputProps{
     onChange: (e: ChangeEvent<HTMLInputElement>) => void,
     disabled?: boolean
     step?: number
+    tooltip_content?: string
 }
 
-export default function Input({type, name, value, onChange, disabled=false, step=1}: InputProps){
+export default function Input({type, name, value, onChange, disabled=false, step=1, tooltip_content}: InputProps){
     if (type==='time'){
         step *= 60 //convert seconds to minutes
     }
@@ -19,5 +20,8 @@ export default function Input({type, name, value, onChange, disabled=false, step
                   step={step}           
                   value={value} 
                   disabled={disabled}
-                  onChange={onChange}/>
+                  onChange={onChange}
+                  data-tooltip-id="my-tooltip" 
+                  data-tooltip-html={tooltip_content} 
+                  data-tooltip-place="top"/>
 }

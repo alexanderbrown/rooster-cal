@@ -1,11 +1,13 @@
 import { ChangeEvent, useState, useEffect } from "react"
 
+import { Tooltip } from 'react-tooltip'
+
 import * as types from "@/types"
-import ShiftTypes from "./shifts/ShiftTypes"
-import EditShiftType from "./shifts/EditShiftType"
-import Label from "./forms/Label"
-import Input from "./forms/Input"
-import Link from "next/link"
+import ShiftTypes from "../shifts/ShiftTypes"
+import EditShiftType from "../shifts/EditShiftType"
+import Label from "../Label"
+import Input from "../Input"
+import ExportCalendar from "../ExportCalendar";
 
 export default function ConfigForm() {
 
@@ -41,20 +43,30 @@ export default function ConfigForm() {
                     body: JSON.stringify(payload)})
     };
 
-    const setShifts = {}
+    const handleSpreadsheetChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const match = event.target.value.match('/d/(?<spreadsheet>[^/]*)')
+        if (match && match.groups){
+            event.target.value = match.groups.spreadsheet
+        }
+        handleChange(event)
+    }
 
     return (
         <div className="flex justify-center items-end pt-2 ">
             <div className="w-full max-w-xl">
+                <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
                 <form action="/send-data-here" method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-                    <Label htmlFor="spreadsheet">Google Sheet ID</Label>
-                    <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleChange} />
+                    <Label htmlFor="spreadsheet" >Google Sheet ID</Label>
+                    <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleSpreadsheetChange}
+                           tooltip_content="Paste the full URL of the rota Google Sheet here and I'll convert it for you"/>
                     <Label htmlFor="sheet">Sheet</Label>
-                    <Input name="sheet" type="text" value={rota?.sheet} onChange={handleChange} />
+                    <Input name="sheet" type="text" value={rota?.sheet} onChange={handleChange} 
+                           tooltip_content="The name of the sheet within the Google Sheet with your particular rota"/>
                     <Label htmlFor="dates_column">Dates Column</Label>
-                    <Input name="dates_column" type="text" value={rota?.dates_column} onChange={handleChange} />
+                    <Input name="dates_column" type="text" value={rota?.dates_column} onChange={handleChange}/>
                     <Label htmlFor="date_format">Date Format</Label>
-                    <Input name="date_format" type="text" value={rota?.date_format} onChange={handleChange} />
+                    <Input name="date_format" type="text" value={rota?.date_format} onChange={handleChange}
+                           tooltip_content="Specify the date format, e.g. 'dd/MM/yyyy' or 'dd-MM-yy'" />
                     <Label htmlFor="shifts_column">Shifts Column</Label>
                     <Input name="shifts_column" type="text" value={rota?.shifts_column} onChange={handleChange} />
                     <Label htmlFor="start_row">Start Row</Label>
@@ -67,8 +79,6 @@ export default function ConfigForm() {
                                 setEditShiftMode={setEditShiftMode}
                                 setEditShiftInfo={setEditShiftInfo} />
                 </form>
-                <Link href={`/api/calendar/${rota?.calendar_id}`}
-                      className='underline text-blue-700'> Calendar Link </Link>
             </div>
             
             {editShiftVisible && <EditShiftType mode={editShiftMode}  
@@ -76,6 +86,7 @@ export default function ConfigForm() {
                                                 setInfo={setEditShiftInfo}
                                                 setVisible={setEditShiftVisible}
                                                 setRota={setRota}/>}
+            <Tooltip id='my-tooltip' />
         </div>
     )
 }

@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import { useSession } from 'next-auth/react';
 
-import ConfigForm from '@/components/ConfigForm';
-import Login from '@/components/Login';
+import 'react-tooltip/dist/react-tooltip.css'
+
+import ConfigForm from '@/components/forms/ConfigForm';
+import Login from '@/components/forms/Login';
 
 export default function Home() {
   const { data, status } = useSession();
@@ -20,7 +22,7 @@ export default function Home() {
               <Login />
           </nav>
           {(status==='authenticated') && 
-            <div className="w-full h-screen bg-gray-100" >
+            <div className="w-full min-h-screen bg-gray-100" >
               <ConfigForm />
             </div>
           }
