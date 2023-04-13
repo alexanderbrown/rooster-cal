@@ -81,12 +81,12 @@ export default function ConfigForm() {
                 </form>
             </div>
             
-            {/* {editShiftVisible && <EditShiftType mode={editShiftMode}  
+            {editShiftVisible && <EditShiftType mode={editShiftMode}  
                                                 info={editShiftInfo}
                                                 setInfo={setEditShiftInfo}
                                                 setVisible={setEditShiftVisible}
                                                 setRota={setRota}/>}
-            <Tooltip id='my-tooltip' /> */}
+            {/* <Tooltip id='my-tooltip' /> */}
         </div>
     )
 }
