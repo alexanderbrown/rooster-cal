@@ -3,11 +3,11 @@ import { ChangeEvent, useState, useEffect } from "react"
 import { Tooltip } from 'react-tooltip'
 
 import * as types from "@/types"
-import ShiftTypes from "../shifts/ShiftTypes"
-import EditShiftType from "../shifts/EditShiftType"
-import Label from "../Label"
-import Input from "../Input"
-import ExportCalendar from "../ExportCalendar";
+import ShiftTypes from "@/components/shifts/ShiftTypes"
+import EditShiftType from "@/components/shifts/EditShiftType"
+import Label from "@/components/Label"
+import Input from "@/components/Input"
+import ExportCalendar from "@/components/ExportCalendar";
 
 export default function ConfigForm() {
 
@@ -29,33 +29,33 @@ export default function ConfigForm() {
         })
     }, [])
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setRota(prev => {
-            if (prev) {
-                return {...prev, [event.target.name]: event.target.value}
-            }
-        });
-        const payload={field: event.target.name, value: event.target.value}
-        fetch('/api/rota', {method: 'POST', 
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(payload)})
-    };
+    // const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     setRota(prev => {
+    //         if (prev) {
+    //             return {...prev, [event.target.name]: event.target.value}
+    //         }
+    //     });
+    //     const payload={field: event.target.name, value: event.target.value}
+    //     fetch('/api/rota', {method: 'POST', 
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                 },
+    //                 body: JSON.stringify(payload)})
+    // };
 
-    const handleSpreadsheetChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const match = event.target.value.match('/d/(?<spreadsheet>[^/]*)')
-        if (match && match.groups){
-            event.target.value = match.groups.spreadsheet
-        }
-        handleChange(event)
-    }
+    // const handleSpreadsheetChange = (event: ChangeEvent<HTMLInputElement>) => {
+    //     const match = event.target.value.match('/d/(?<spreadsheet>[^/]*)')
+    //     if (match && match.groups){
+    //         event.target.value = match.groups.spreadsheet
+    //     }
+    //     handleChange(event)
+    // }
 
     return (
         <div className="flex justify-center items-end pt-2 ">
             <div className="w-full max-w-xl">
                 <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
-                <form action="/send-data-here" method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                {/* <form action="/send-data-here" method="post" className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <Label htmlFor="spreadsheet" >Google Sheet ID</Label>
                     <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleSpreadsheetChange}
                            tooltip_content="Paste the full URL of the rota Google Sheet here and I'll convert it for you"/>
@@ -78,15 +78,15 @@ export default function ConfigForm() {
                                 setEditShiftVisibility={setEditShiftVisible}
                                 setEditShiftMode={setEditShiftMode}
                                 setEditShiftInfo={setEditShiftInfo} />
-                </form>
+                </form> */}
             </div>
             
-            {editShiftVisible && <EditShiftType mode={editShiftMode}  
+            {/* {editShiftVisible && <EditShiftType mode={editShiftMode}  
                                                 info={editShiftInfo}
                                                 setInfo={setEditShiftInfo}
                                                 setVisible={setEditShiftVisible}
                                                 setRota={setRota}/>}
-            <Tooltip id='my-tooltip' />
+            <Tooltip id='my-tooltip' /> */}
         </div>
     )
 }
