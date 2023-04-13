@@ -50,7 +50,8 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
 
 
 async function authenticate(req: NextApiRequest, id: string, secret: string) {
-  const {id: calendar_id} = req.query
+  const {id: calendar_ics} = req.query
+  const calendar_id = (calendar_ics as string).replace('.ics', '')
 
   await dbConnect()
   const rota_doc = await Rota.findOne({calendar_id})
