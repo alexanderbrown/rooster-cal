@@ -12,7 +12,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
     const token = await jwtDbConnect(req)
 
     if (!token) {
-      return res.status(403).end()
+      return res.status(403).send(token)
     }
 
     if (req.method==='GET') {
