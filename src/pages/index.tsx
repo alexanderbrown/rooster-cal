@@ -1,32 +1,30 @@
 import Head from 'next/head'
 import { useSession } from 'next-auth/react';
-// import { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import 'react-tooltip/dist/react-tooltip.css'
 
-// import ConfigForm from '@/components/forms/ConfigForm';
+import ConfigForm from '@/components/forms/ConfigForm';
 import Login from '@/components/forms/Login';
+import NotAllowed from '@/components/forms/NotAllowed';
 import Welcome from '@/components/forms/Welcome';
-// import NotAllowed from '@/components/forms/NotAllowed';
 
 export default function Home() {
   const { data, status } = useSession();
-  // const [isAllowedUser, setIsAllowedUser] = useState(false)
+  const [isAllowedUser, setIsAllowedUser] = useState(false)
 
-  //   useEffect(() => {
-  //     const checkAllowed = async (email: string) => {
-  //       const res = await fetch (`/api/allowed-users/${email}`)
-  //       setIsAllowedUser(res.status===200)
-  //     }
+    useEffect(() => {
+      const checkAllowed = async (email: string) => {
+        const res = await fetch (`/api/allowed-users/${email}`)
+        setIsAllowedUser(res.status===200)
+      }
 
-  //   if (data && data.user?.email){
-  //       checkAllowed(data.user.email)
-  //   } else {
-  //       setIsAllowedUser(false)
-  //   }
-  //   }, [data])
-    
-
+    if (data && data.user?.email){
+        checkAllowed(data.user.email)
+    } else {
+        setIsAllowedUser(false)
+    }
+    }, [data])
 
   return (
     <>
@@ -43,13 +41,13 @@ export default function Home() {
               <Login />
           </nav>
           <div className="w-full min-h-screen bg-gray-100" >
-            {status}
-            {/* {(status==='authenticated') && 
-              <>
-                {(isAllowedUser===true) && <ConfigForm /> }
-                {(isAllowedUser!==true) && <NotAllowed /> }
-              </>
-            } */}
+            {(status==='authenticated') && 
+              <NotAllowed />
+              // <>
+              //   {(isAllowedUser===true) && <ConfigForm /> }
+              //   {(isAllowedUser!==true) && <NotAllowed /> }
+              // </>
+            }
             {(status!=='authenticated') &&
               <Welcome />
             }
