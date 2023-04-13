@@ -11,7 +11,7 @@ import Welcome from '@/components/forms/Welcome';
 
 export default function Home() {
   const { data, status } = useSession();
-  const [isAllowedUser, setIsAllowedUser] = useState(false)
+  const [isAllowedUser, setIsAllowedUser] = useState<boolean | undefined>(undefined)
 
     useEffect(() => {
       const checkAllowed = async (email: string) => {
@@ -44,7 +44,8 @@ export default function Home() {
             {(status==='authenticated') && 
               <>
                 {(isAllowedUser===true) && <ConfigForm /> }
-                {(isAllowedUser!==true) && <NotAllowed /> }
+                {(isAllowedUser===false) && <NotAllowed /> }
+                {(isAllowedUser===undefined) && <h3 className='ml-10 mt-4 text-lg text-slate-800'> Loading... please wait</h3> }
               </>
             }
             {(status!=='authenticated') &&

@@ -86,7 +86,7 @@ export default function ConfigForm() {
                                                 setInfo={setEditShiftInfo}
                                                 setVisible={setEditShiftVisible}
                                                 setRota={setRota}/>}
-            {/* <Tooltip id='my-tooltip' /> */}
+            <Tooltip id='my-tooltip' />
         </div>
     )
 }
