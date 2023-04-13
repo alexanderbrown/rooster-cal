@@ -1,11 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-import * as types from '@/types'
 import jwtDbConnect from "@/data/lib/connect";
 import { Rota} from "@/data/models/Rota";
-import mongoose from "mongoose";
-
-type RotaDoc = (types.Rota & mongoose.Document) | null
 
 export default async (req:NextApiRequest, res:NextApiResponse) => {
     const token = await jwtDbConnect(req)
