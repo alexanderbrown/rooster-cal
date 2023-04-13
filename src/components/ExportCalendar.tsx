@@ -17,7 +17,7 @@ export default function ExportCalendar({calendar_id}: {calendar_id: string}){
             <a className={`${copyButtonBackgroundColor[copyButtonState]} transition-all duration-200
                             border shadow-md hover:shadow-lg p-4 rounded hover:bg-white cursor-pointer ml-4`} 
                 onClick={() => {
-                    copy(`${window.location.host}/api/calendar/${calendar_id}`)
+                    copy(`${window.location.protocol}//${window.location.host}/api/calendar/${calendar_id}`)
                     setCopyButtonState(1)
                     setTimeout(()=>setCopyButtonState(0), 5000)}}>
                 {copyButtonTextOptions[copyButtonState]} 
