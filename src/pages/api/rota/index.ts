@@ -8,7 +8,7 @@ import { Rota } from "@/data/models/Rota";
 import * as types from '@/types'
 
 
-export default async (req:NextApiRequest, res:NextApiResponse) => {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
     const token = await jwtDbConnect(req)
 
     if (!token) {

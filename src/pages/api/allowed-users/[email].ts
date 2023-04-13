@@ -6,7 +6,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { dbConnect } from "@/data/lib/connect";
 import { AllowedUser } from "@/data/models/AllowedUser";
 
-export default async (req:NextApiRequest, res:NextApiResponse) => {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
     if (process.env.ALLOWLIST_ONLY !== 'true'){
         return res.status(200).end()
     }

@@ -4,17 +4,6 @@ dotenv.config()
 const GOOGLE_ID = process.env.GOOGLE_ID
 const GOOGLE_SECRET = process.env.GOOGLE_SECRET
 
-if (!GOOGLE_ID)  {
-  throw new Error(
-    'Please define the GOOGLE_ID environment variable inside .env'
-  )
-}
-if (!GOOGLE_SECRET)  {
-  throw new Error(
-      'Please define the GOOGLE_SECRET environment variable inside .env'
-  )
-}
-
 import ical, {ICalEventData} from 'ical-generator'
 
 import { dbConnect } from '@/data/lib/connect';
@@ -24,7 +13,17 @@ import { DateTime, Duration } from 'luxon';
 import {  getRefreshToken, persistAccessToken, persistRefreshToken, refreshAccessToken } from '@/data/lib/tokenManagement';
 import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async (req:NextApiRequest, res:NextApiResponse) => {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
+  if (!GOOGLE_ID)  {
+    throw new Error(
+      'Please define the GOOGLE_ID environment variable inside .env'
+    )
+  }
+  if (!GOOGLE_SECRET)  {
+    throw new Error(
+        'Please define the GOOGLE_SECRET environment variable inside .env'
+    )
+  }
 
   const {rota_doc, access_token} = await authenticate(req, GOOGLE_ID, GOOGLE_SECRET)
   if ((rota_doc===null) || (access_token===null)) return res.status(404).end()

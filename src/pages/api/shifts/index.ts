@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import jwtDbConnect from "@/data/lib/connect";
 import { Rota} from "@/data/models/Rota";
 
-export default async (req:NextApiRequest, res:NextApiResponse) => {
+export default async function handler (req:NextApiRequest, res:NextApiResponse) {
     const token = await jwtDbConnect(req)
 
     if (!token) {
