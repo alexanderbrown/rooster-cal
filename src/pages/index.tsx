@@ -42,11 +42,10 @@ export default function Home() {
           </nav>
           <div className="w-full min-h-screen bg-gray-100" >
             {(status==='authenticated') && 
-              <NotAllowed />
-              // <>
-              //   {(isAllowedUser===true) && <ConfigForm /> }
-              //   {(isAllowedUser!==true) && <NotAllowed /> }
-              // </>
+              <>
+                {(isAllowedUser===true) && <p>config</p> }
+                {(isAllowedUser!==true) && <NotAllowed /> }
+              </>
             }
             {(status!=='authenticated') &&
               <Welcome />
