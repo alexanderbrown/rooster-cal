@@ -11,6 +11,7 @@ export default function Welcome () {
                 Rooster needs your Google login so that it can access your rota sheet. By logging in, you grant permission for the app to access the specified Sheet on your behalf. This access is read only. \n
                 Rooster will never use your access for any other purpose. \n
             </HeaderAndText>
+            <p className="text-sm mt-8">Please note, Rooster is currently in beta mode, and is invite only. Please contact Alex if you would like to give it a go</p>
         </div>
     )
 }
