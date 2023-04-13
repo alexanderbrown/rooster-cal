@@ -6,7 +6,7 @@ import 'react-tooltip/dist/react-tooltip.css'
 
 // import ConfigForm from '@/components/forms/ConfigForm';
 import Login from '@/components/forms/Login';
-// import Welcome from '@/components/forms/Welcome';
+import Welcome from '@/components/forms/Welcome';
 // import NotAllowed from '@/components/forms/NotAllowed';
 
 export default function Home() {
@@ -49,10 +49,10 @@ export default function Home() {
                 {(isAllowedUser===true) && <ConfigForm /> }
                 {(isAllowedUser!==true) && <NotAllowed /> }
               </>
-            }
+            } */}
             {(status!=='authenticated') &&
               <Welcome />
-            } */}
+            }
           </div>
 
         </div>
