@@ -43,7 +43,7 @@ export default function Home() {
           <div className="w-full min-h-screen bg-gray-100" >
             {(status==='authenticated') && 
               <>
-                {(isAllowedUser===true) && <p>config</p> }
+                {(isAllowedUser===true) && <ConfigForm /> }
                 {(isAllowedUser!==true) && <NotAllowed /> }
               </>
             }
