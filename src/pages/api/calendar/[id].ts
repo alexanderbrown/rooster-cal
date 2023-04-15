@@ -136,7 +136,8 @@ function toICSObject(entry: parsedResults, dateFormat: string): ICalEventData | 
           start: startTime,
           end: endTime,
           summary: entry.matchingShift.name + entry.remainder,
-          allDay: false
+          allDay: false,
+          timezone: 'Europe/London'
         }
       }
     } else {
