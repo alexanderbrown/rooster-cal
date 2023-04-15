@@ -123,9 +123,9 @@ function toICSObject(entry: parsedResults, dateFormat: string): ICalEventData | 
 
     if (entry.matchingShift){
       if (entry.matchingShift.allday){
-        const startTime = DateTime.fromFormat(entry.date, dateFormat).toISODate()
+        const startTime = DateTime.fromFormat(entry.date, dateFormat)
         return {
-          start: startTime,
+          start: startTime.toISODate(),
           summary: entry.matchingShift.name + entry.remainder,
           allDay: true
         }
@@ -133,17 +133,17 @@ function toICSObject(entry: parsedResults, dateFormat: string): ICalEventData | 
         const startTime = DateTime.fromFormat(`${entry.date} ${entry.matchingShift.start}`, dateFormat + ' HH:mm')
         const endTime = startTime.plus(Duration.fromObject({hours: entry.matchingShift.duration}))
         return {
-          start: startTime,
-          end: endTime,
+          start: startTime.toISO(),
+          end: endTime.toISO(),
           summary: entry.matchingShift.name + entry.remainder,
           allDay: false,
           timezone: 'Europe/London'
         }
       }
     } else {
-      const startTime = DateTime.fromFormat(entry.date, dateFormat).toISODate()
+      const startTime = DateTime.fromFormat(entry.date, dateFormat)
       return {
-        start: startTime,
+        start: startTime.toISODate(),
         summary: entry.remainder,
         allDay: true
       }
