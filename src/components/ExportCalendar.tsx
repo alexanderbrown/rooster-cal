@@ -35,7 +35,7 @@ export default function ExportCalendar({calendar_id}: {calendar_id: string}){
                                     Open Rota
                     </a>
                     <a className={`${copyButtonBackgroundColor[copyButtonState]}
-                                    py-4 h-12 sm:h-14 text-sm sm:text-base
+                                    flex justify-center py-4 h-12 sm:h-14 text-sm sm:text-base
                                     border-l-2 w-20 sm:w-24 group-hover:bg-white `} 
                         onClick={() => {
                             copy(`${window.location.protocol}//${calendar_url}`)
