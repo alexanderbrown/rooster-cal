@@ -4,17 +4,11 @@ import { Tooltip } from 'react-tooltip'
 
 import * as types from "@/types"
 import ShiftTypes from "@/components/shifts/ShiftTypes"
-import EditShiftType from "@/components/shifts/EditShiftType"
 import Label from "@/components/Label"
 import Input from "@/components/Input"
 import ExportCalendar from "@/components/ExportCalendar";
 
 export default function ConfigForm() {
-
-    const [editShiftMode, setEditShiftMode] = useState<'Add' | 'Update'>('Add')
-    const [editShiftVisible, setEditShiftVisible] = useState(false)
-    const [editShiftInfo, setEditShiftInfo] = useState<types.Shift>(types.BLANKSHIFT)
-
     const [rota, setRota] = useState<types.Rota>()
 
     // Get the user's rota config
@@ -74,18 +68,9 @@ export default function ConfigForm() {
                     <Label htmlFor="end_row">Start Row</Label>
                     <Input name="end_row" type="number" value={rota?.end_row} onChange={handleChange} />
                     <Label htmlFor="set_shifts">Shift Types for this rota</Label>
-                    <ShiftTypes shifts={rota?.shifts} setRota={setRota} 
-                                setEditShiftVisibility={setEditShiftVisible}
-                                setEditShiftMode={setEditShiftMode}
-                                setEditShiftInfo={setEditShiftInfo} />
+                    <ShiftTypes shifts={rota?.shifts} setRota={setRota}/>
                 </form>
             </div>
-            
-            {editShiftVisible && <EditShiftType mode={editShiftMode}  
-                                                info={editShiftInfo}
-                                                setInfo={setEditShiftInfo}
-                                                setVisible={setEditShiftVisible}
-                                                setRota={setRota}/>}
             <Tooltip id='my-tooltip' />
         </div>
     )
