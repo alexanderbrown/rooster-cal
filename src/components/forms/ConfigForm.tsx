@@ -15,7 +15,6 @@ export default function ConfigForm() {
     useEffect(() => {
         const fetchRotaConfig = async () => {
             const data = await fetch('/api/rota')
-            console.log(data)
             return await data.json()
         }
         fetchRotaConfig().then( data => {
@@ -48,7 +47,7 @@ export default function ConfigForm() {
     return (
         <div className="flex justify-center items-end p-2 ">
             <div className="w-full max-w-xl">
-                <form className="bg-white shadow-md rounded px-4 sm:px-10 pt-4 sm:pt-6 pb-8 mb-4">
+                <div className="bg-white shadow-md rounded px-4 sm:px-10 pt-4 sm:pt-6 pb-8 mb-4">
                     <Label htmlFor="spreadsheet" >Google Sheet ID</Label>
                     <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleSpreadsheetChange}
                            tooltip_content="Paste the full URL of the rota Google Sheet<br />here and I'll convert it for you"/>
@@ -68,7 +67,7 @@ export default function ConfigForm() {
                     <Input name="end_row" type="number" value={rota?.end_row} onChange={handleChange} />
                     <Label htmlFor="set_shifts">Shift Types for this rota</Label>
                     <ShiftTypes shifts={rota?.shifts} setRota={setRota}/>
-                </form>
+                </div>
                 <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
             </div>
             <Tooltip id='my-tooltip' />
