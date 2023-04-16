@@ -64,16 +64,17 @@ export default function EditShiftType(props: EditShiftTypeProps){
     <form className={`bg-slate-50 shadow-md rounded px-8 pt-6 pb-8 mb-4 shrink-0 w-full duration-300
                       ${props.editShiftVisible? ' -translate-x-full': ''}`}>
             <Label htmlFor="name">Shift Name</Label>
-            <Input type="text" name="name" onChange={handleChange} value={info.name}/>
+            <Input type="text" name="name" onChange={handleChange} value={info.name}
+                    tooltip_content='This will be the name of the event in your calendar'/>
             <Label htmlFor="string">String to match</Label>
             <Input type="text" name="string" onChange={handleChange} value={info.string}
-                    tooltip_content="Entries on the sheet starting with this string will be matched to this shift<br><br>
-                                    For example, if you set this to 'LD', this would match any <br>
-                                    entry in the sheet that began with 'LD' such as 'LD - swapped in'.<br>
-                                    If there is any extra information this will be copied in to the event. "/>
+                    tooltip_content="Entries to match to this shift type<br /><br />
+                                    Example: 'LD' would match any entry that<br />
+                                    begins with 'LD' such as 'LD - swapped in'.<br />
+                                    Any extra information will be added to the event. "/>
             <Label htmlFor="allday">All Day?</Label>
             <Checkbox name="allday" onChange={handleChange} checked={info.allday}/>
-            <Label disabled={info.allday} htmlFor="start">Start Time</Label>
+            <Label disabled={info.allday} htmlFor="start">Start Time (24h)</Label>
             <Input disabled={info.allday} type="time" name="start" onChange={handleChange} value={info.start}/>
             <Label disabled={info.allday} htmlFor="duration">Duration (hours)</Label>
             <Input disabled={info.allday} type="number" step={0.1} name="duration" onChange={handleChange} value={info.duration}/>

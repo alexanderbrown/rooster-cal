@@ -48,14 +48,13 @@ export default function ConfigForm() {
     return (
         <div className="flex justify-center items-end p-2 ">
             <div className="w-full max-w-xl">
-                <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
                 <form className="bg-white shadow-md rounded px-4 sm:px-10 pt-4 sm:pt-6 pb-8 mb-4">
                     <Label htmlFor="spreadsheet" >Google Sheet ID</Label>
                     <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleSpreadsheetChange}
-                           tooltip_content="Paste the full URL of the rota Google Sheet here and I'll convert it for you"/>
+                           tooltip_content="Paste the full URL of the rota Google Sheet<br />here and I'll convert it for you"/>
                     <Label htmlFor="sheet">Sheet</Label>
                     <Input name="sheet" type="text" value={rota?.sheet} onChange={handleChange} 
-                           tooltip_content="The name of the sheet within the Google Sheet with your particular rota"/>
+                           tooltip_content="The name of the tab within the Google Sheet<br />with your particular rota"/>
                     <Label htmlFor="dates_column">Dates Column</Label>
                     <Input name="dates_column" type="text" value={rota?.dates_column} onChange={handleChange}/>
                     <Label htmlFor="date_format">Date Format</Label>
@@ -70,6 +69,7 @@ export default function ConfigForm() {
                     <Label htmlFor="set_shifts">Shift Types for this rota</Label>
                     <ShiftTypes shifts={rota?.shifts} setRota={setRota}/>
                 </form>
+                <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
             </div>
             <Tooltip id='my-tooltip' />
         </div>
