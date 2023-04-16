@@ -32,25 +32,26 @@ export default function Home() {
         <title>Rooster-Calendar</title>
         <meta name="description" content="ICS Export for Google Sheet Calendars" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-        {/* <link rel="icon" href="/favicon.ico" /> */}
+        <link rel="icon" href="/rooster.png" type="image/png" />
       </Head>
       <main>
-        <div className='min-h-screen bg-gray-100'>
+        <div className='min-h-screen bg-gray-100 flex flex-col justify-center'>
           <LoginBar />
-          <div className="w-full" >
-            {(status==='authenticated') && 
-              <>
-                {(isAllowedUser===true) && <ConfigForm /> }
-                {(isAllowedUser===false) && <NotAllowed /> }
-                {(isAllowedUser===undefined) && <h3 className='ml-10 mt-4 text-lg text-slate-800'> Loading... please wait</h3> }
-              </>
-            }
-            {(status!=='authenticated') &&
+          {(status==='authenticated') && 
+            <div className="w-full flex-1">
+              {(isAllowedUser===true) && <ConfigForm /> }
+              {(isAllowedUser===false) && <NotAllowed /> }
+              {(isAllowedUser===undefined) && <h3 className='ml-10 mt-4 text-lg text-slate-800'> Loading... please wait</h3> }
+            </div>
+          }
+          {(status!=='authenticated') &&
+            <div className="w-full flex-1 flex justify-center" >
               <Welcome />
-            }
-          </div>
-
+            </div>
+          }
+          <footer className='flex flex-col justify-center items-center'>
+              <p className="text-xs"><a href="https://www.flaticon.com/free-icons/rooster" title="rooster icons">Rooster icons created by Smashicons - Flaticon</a></p>
+          </footer>
         </div>
       </main>
     </>

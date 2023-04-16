@@ -18,8 +18,8 @@ export default function LoginBar() {
             <div className='flex items-center'>
                 <img className="rounded-full w-8 h-8" src={data.user?.image || ''} alt='User Image'/>
                 <div className='flex flex-col p-2 pt-1'>
-                    <h3 className='sm:text-lg'> {data.user? `${data.user.name}` : 'Unknown User'}</h3>
-                    <h3 className='text-xs sm:text-sm pb-1'> {data.user? `${data.user.email}` :''}</h3>
+                    <h3 className='text-sm sm:text-base'> {data.user? `${truncateString(data.user.name, 18)}` : 'Unknown User'}</h3>
+                    <h3 className='text-xs sm:text-sm pb-1'> {data.user? `${truncateString(data.user.email, 25)}` :''}</h3>
                 </div>
                 <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full ml-2 text-sm sm:text-base' onClick={() => signOut()}>
                     Sign out
@@ -38,8 +38,14 @@ export default function LoginBar() {
     }
 
     return (
-        <nav className='flex justify-center sm:justify-end items-center flex-wrap bg-blue-100 p-2 sticky top-0'>
+        <nav className='flex justify-between items-center flex-wrap bg-blue-100 p-2 sticky top-0'>
+            <img className='h-14' src='/rooster.png' />
             {content}
         </nav>
     )
+}
+
+function truncateString(str: string | undefined | null, maxLength: number) {
+    if (!str) return str
+    return str.length > maxLength ? str.substring(0, maxLength - 3) + "..." : str
 }
