@@ -16,11 +16,11 @@ export default function ShiftChip({shift, removeShift, setEditShiftVisibility, s
 
     const displayString = ` (${shift.string}) `
 
-    let chipColor ='bg-slate-200 border-slate-400 text-slate-800'
+    let chipColor ='bg-slate-200 border-slate-400 text-slate-800 hover:bg-slate-50'
     if (shift.allday) {
-        chipColor = 'bg-blue-400 bg-blue-500 text-white'
+        chipColor = 'bg-sky-300 bg-sky-500 text-black hover:bg-sky-200'
     } else if (overnight) {
-        chipColor = 'bg-blue-900 border-blue-900 text-white'
+        chipColor = 'bg-black border-blue-900 text-white hover:bg-blue-900'
     }
 
     return (

@@ -6,7 +6,7 @@ import googleSigninImage from '../../../public/btn_google_signin_light_normal_we
 import googleSigninImagePressed from '../../../public/btn_google_signin_light_pressed_web.png'
 
 
-export default function Login() {
+export default function LoginBar() {
     const { data, status } = useSession();
     const [buttonImage, setButtonImage] = useState(googleSigninImage)
     let content; 
@@ -17,14 +17,14 @@ export default function Login() {
         <div className='flex flex-col w-fit  bg-blue-50 rounded-md border border-blue-400 px-2 py-1'>
             <div className='flex items-center'>
                 <img className="rounded-full w-8 h-8" src={data.user?.image || ''} alt='User Image'/>
-                    <div className='flex flex-col p-2 pt-1'>
-                        <h3 className='text-lg'> {data.user? `${data.user.name}` : 'Unknown User'}</h3>
-                        <h3 className='text-sm pb-1'> {data.user? `${data.user.email}` :''}</h3>
-                    </div>
+                <div className='flex flex-col p-2 pt-1'>
+                    <h3 className='sm:text-lg'> {data.user? `${data.user.name}` : 'Unknown User'}</h3>
+                    <h3 className='text-xs sm:text-sm pb-1'> {data.user? `${data.user.email}` :''}</h3>
+                </div>
+                <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full ml-2 text-sm sm:text-base' onClick={() => signOut()}>
+                    Sign out
+                </button>
             </div>
-            <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full w-full mb-1' onClick={() => signOut()}>
-                Sign out
-            </button>
         </div>
       );
     } else {
@@ -38,8 +38,8 @@ export default function Login() {
     }
 
     return (
-        <div className='mr-2'>
+        <nav className='flex justify-center sm:justify-end items-center flex-wrap bg-blue-100 p-2 sticky top-0'>
             {content}
-        </div>   
+        </nav>
     )
 }

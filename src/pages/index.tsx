@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import 'react-tooltip/dist/react-tooltip.css'
 
 import ConfigForm from '@/components/forms/ConfigForm';
-import Login from '@/components/forms/Login';
+import LoginBar from '@/components/forms/LoginBar';
 import NotAllowed from '@/components/forms/NotAllowed';
 import Welcome from '@/components/forms/Welcome';
 
@@ -36,11 +36,9 @@ export default function Home() {
         {/* <link rel="icon" href="/favicon.ico" /> */}
       </Head>
       <main>
-        <div>
-          <nav className='flex flex-row-reverse items-center flex-wrap bg-blue-100 p-1 '>
-              <Login />
-          </nav>
-          <div className="w-full min-h-screen bg-gray-100" >
+        <div className='min-h-screen bg-gray-100'>
+          <LoginBar />
+          <div className="w-full" >
             {(status==='authenticated') && 
               <>
                 {(isAllowedUser===true) && <ConfigForm /> }

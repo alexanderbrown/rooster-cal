@@ -52,10 +52,10 @@ export default function ConfigForm() {
     }
 
     return (
-        <div className="flex justify-center items-end pt-2 ">
+        <div className="flex justify-center items-end p-2 ">
             <div className="w-full max-w-xl">
                 <ExportCalendar calendar_id={rota?.calendar_id || ''}/>
-                <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <form className="bg-white shadow-md rounded px-4 sm:px-10 pt-4 sm:pt-6 pb-8 mb-4">
                     <Label htmlFor="spreadsheet" >Google Sheet ID</Label>
                     <Input name="spreadsheet" type="text" value={rota?.spreadsheet} onChange={handleSpreadsheetChange}
                            tooltip_content="Paste the full URL of the rota Google Sheet here and I'll convert it for you"/>
