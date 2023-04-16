@@ -14,7 +14,7 @@ export default function Input({type, name, value, onChange, disabled=false, step
     if (type==='time'){
         step *= 60 //convert seconds to minutes
     }
-    const className = `shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight 
+    const className = `bg-white disabled:bg-slate-200 shadow appearance-none border rounded w-full py-2 px-3 text-slate-700 leading-tight 
                        focus:outline-none focus:shadow-outline`
     return <input className={className} 
                   id={name} name={name}

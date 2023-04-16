@@ -74,10 +74,10 @@ export default function EditShiftType(props: EditShiftTypeProps){
                                     Any extra information will be added to the event. "/>
             <Label htmlFor="allday">All Day?</Label>
             <Checkbox name="allday" onChange={handleChange} checked={info.allday}/>
-            <Label disabled={info.allday} htmlFor="start">Start Time (24h)</Label>
-            <Input disabled={info.allday} type="time" name="start" onChange={handleChange} value={info.start}/>
+            <Label disabled={info.allday} htmlFor="start">Start Time</Label>
+            <Input disabled={info.allday} type="time" name="start" onChange={handleChange} value={info.allday? '' : info.start}/>
             <Label disabled={info.allday} htmlFor="duration">Duration (hours)</Label>
-            <Input disabled={info.allday} type="number" step={0.1} name="duration" onChange={handleChange} value={info.duration}/>
+            <Input disabled={info.allday} type="number" step={0.1} name="duration" onChange={handleChange} value={info.allday? '' : info.duration}/>
 
             <div className="flex items-center justify-between mt-4">
                 <button className="bg-gray-50 shadow-md border font-bold py-2 px-4 rounded focus:outline-none hover:shadow-lg hover:bg-white"
