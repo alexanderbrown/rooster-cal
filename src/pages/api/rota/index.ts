@@ -47,9 +47,8 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
                 calendar_id: crypto.randomUUID()
             }
             let rota = new Rota(rota_doc)
-            console.log(rota)
             await rota.save()
-            return res.status(200).json({...rota_docs[0]});
+            return res.status(200).json(rota_doc);
         }
       }  else if (req.method==='POST'){
           const filter = {user: token.email}
