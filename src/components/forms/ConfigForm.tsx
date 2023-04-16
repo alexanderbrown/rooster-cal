@@ -65,7 +65,7 @@ export default function ConfigForm() {
                     <Input name="shifts_column" type="text" value={rota?.shifts_column} onChange={handleChange} />
                     <Label htmlFor="start_row">Start Row</Label>
                     <Input name="start_row" type="number" value={rota?.start_row} onChange={handleChange} />
-                    <Label htmlFor="end_row">Start Row</Label>
+                    <Label htmlFor="end_row">End Row</Label>
                     <Input name="end_row" type="number" value={rota?.end_row} onChange={handleChange} />
                     <Label htmlFor="set_shifts">Shift Types for this rota</Label>
                     <ShiftTypes shifts={rota?.shifts} setRota={setRota}/>
