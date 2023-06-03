@@ -34,7 +34,6 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
                 sheet: '<Sheet Name>',
                 shifts_column: 'B',
                 dates_column: 'A',
-                date_format: 'dd/MM/yyyy',
                 start_row: 1, 
                 end_row: 1, 
                 shifts: [
