@@ -56,9 +56,6 @@ export default function ConfigForm() {
                            tooltip_content="The name of the tab within the Google Sheet<br />with your particular rota"/>
                     <Label htmlFor="dates_column">Dates Column</Label>
                     <Input name="dates_column" type="text" value={rota?.dates_column} onChange={handleChange}/>
-                    <Label htmlFor="date_format">Date Format</Label>
-                    <Input name="date_format" type="text" value={rota?.date_format} onChange={handleChange}
-                           tooltip_content="Specify the date format, e.g. 'dd/MM/yyyy' or 'dd-MM-yy'" />
                     <Label htmlFor="shifts_column">Shifts Column</Label>
                     <Input name="shifts_column" type="text" value={rota?.shifts_column} onChange={handleChange} />
                     <Label htmlFor="start_row">Start Row</Label>

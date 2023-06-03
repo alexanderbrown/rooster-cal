@@ -15,7 +15,6 @@ export type Rota = {
     start_row: number,
     end_row: number,
     shifts: Shift[], 
-    date_format: string,
     calendar_id?: string
 }
 

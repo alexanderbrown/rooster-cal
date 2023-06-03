@@ -21,7 +21,6 @@ const RotaSchema = new Schema<types.Rota>({
   end_row: { type: Number, required: true},
   shifts: [ShiftSchema],
   calendar_id: {type: String, required: false},
-  date_format: {type: String, required: true}
 });
 
 export const Rota: mongoose.Model<types.Rota> = mongoose.models.Rota || mongoose.model('Rota', RotaSchema);

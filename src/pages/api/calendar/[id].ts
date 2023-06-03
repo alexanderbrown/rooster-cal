@@ -5,13 +5,15 @@ const GOOGLE_ID = process.env.GOOGLE_ID
 const GOOGLE_SECRET = process.env.GOOGLE_SECRET
 
 import ical, {ICalEventData} from 'ical-generator'
+import { DateTime, Duration } from 'luxon';
+import { NextApiRequest, NextApiResponse } from 'next'
+
 
 import { dbConnect } from '@/data/lib/connect';
 import { Rota } from '@/data/models/Rota';
 import * as types from '@/types';
-import { DateTime, Duration } from 'luxon';
 import {  getRefreshToken, persistAccessToken, persistRefreshToken, refreshAccessToken } from '@/data/lib/tokenManagement';
-import { NextApiRequest, NextApiResponse } from 'next'
+import { parseDate, parseTime } from '@/utils/datetime'
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
   if (!GOOGLE_ID)  {
@@ -40,7 +42,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
                    prodId: {company: 'rooster', product: 'googlesheet_exporter', language: 'EN'}})
   results.forEach(result => {
     if (result) {
-      const event = toICSObject(result, rota_doc.date_format)
+      const event = toICSObject(result)
       if (event) cal.createEvent(event)
     }
   })
@@ -118,19 +120,22 @@ interface parsedResults {
   matchingShift: types.Shift | null,
   remainder: string}
 
-function toICSObject(entry: parsedResults, dateFormat: string): ICalEventData | null{
+function toICSObject(entry: parsedResults): ICalEventData | null{
     if (!entry.date) return null
+
+    const date = parseDate(entry.date)
+    const shiftStartTime = entry.matchingShift?.start? parseTime(entry.matchingShift?.start) : '00:00'
 
     if (entry.matchingShift){
       if (entry.matchingShift.allday){
-        const startTime = DateTime.fromFormat(entry.date, dateFormat)
+        const startTime = DateTime.fromFormat(date, 'dd/MM/yyyy')
         return {
           start: startTime.toISODate(),
           summary: entry.matchingShift.name + entry.remainder,
           allDay: true
         }
       } else {
-        const startTime = DateTime.fromFormat(`${entry.date} ${entry.matchingShift.start}`, dateFormat + ' HH:mm')
+        const startTime = DateTime.fromFormat(`${date} ${shiftStartTime}`, 'dd/MM/yyyy HH:mm')
         const endTime = startTime.plus(Duration.fromObject({hours: entry.matchingShift.duration}))
         return {
           start: startTime.toISO(),
@@ -141,7 +146,7 @@ function toICSObject(entry: parsedResults, dateFormat: string): ICalEventData | 
         }
       }
     } else {
-      const startTime = DateTime.fromFormat(entry.date, dateFormat)
+      const startTime = DateTime.fromFormat(date, 'dd/MM/yyyy')
       return {
         start: startTime.toISODate(),
         summary: entry.remainder,
