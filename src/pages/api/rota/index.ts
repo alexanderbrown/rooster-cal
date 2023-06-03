@@ -35,13 +35,13 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
                 shifts_column: 'B',
                 dates_column: 'A',
                 date_format: 'dd/MM/yyyy',
-                start_row: 0, 
-                end_row: 0, 
+                start_row: 1, 
+                end_row: 1, 
                 shifts: [
                     {name: 'Day', 
                     string: 'D', 
                     allday: false,
-                    start: '08.30', 
+                    start: '08:30', 
                     duration: 8.5}
                 ], 
                 calendar_id: crypto.randomUUID()

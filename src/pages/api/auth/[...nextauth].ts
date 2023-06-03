@@ -23,13 +23,13 @@ if (!GOOGLE_SECRET)  {
 }
 
 let providerAuthParams: AuthorizationParameters = {
-    scope: "openid email profile https://www.googleapis.com/auth/spreadsheets.readonly"
+    scope: "openid email profile https://www.googleapis.com/auth/spreadsheets.readonly",
+    access_type: 'offline'
 }
 
 if (process.env.GOOGLE_FORCE_NEW_REFRESH_TOKEN==='true') {
   providerAuthParams = {...providerAuthParams, 
        prompt: "consent",
-       access_type: "offline",
        response_type: "code", 
   }
 }
