@@ -30,6 +30,8 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   const {rota_doc, access_token} = await authenticate(req, GOOGLE_ID, GOOGLE_SECRET)
   if ((rota_doc===null) || (access_token===null)) return res.status(404).end()
 
+  // sort by length, longest to shortest - so that we match the most specific pattern first
+  const shiftPatterns = rota_doc.shifts.sort((a,b) => b.string.length - a.string.length)
   
   const dates = await getSheetColumnData({...rota_doc.toObject(), column: rota_doc.dates_column, access_token: access_token})
   const shifts = await getSheetColumnData({...rota_doc.toObject(), column: rota_doc.shifts_column, access_token: access_token})
@@ -40,7 +42,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
 
   const data = dates.map((d, i) => {return{date: d, shift: shifts[i]}})
 
-  const results = data.map(entry => convertToCalendar(entry.date, entry.shift, rota_doc.shifts))
+  const results = data.map(entry => convertToCalendar(entry.date, entry.shift, shiftPatterns))
 
   const cal = ical({name: `${rota_doc.user.replace('@gmail.com', '')} Rota`, 
                    prodId: {company: 'rooster', product: 'googlesheet_exporter', language: 'EN'}})
