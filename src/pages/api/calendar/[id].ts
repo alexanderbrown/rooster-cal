@@ -34,6 +34,10 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   const dates = await getSheetColumnData({...rota_doc.toObject(), column: rota_doc.dates_column, access_token: access_token})
   const shifts = await getSheetColumnData({...rota_doc.toObject(), column: rota_doc.shifts_column, access_token: access_token})
   
+  const dateFormat = detectDateFormat(dates)
+  console.log(dateFormat)
+  if (!dateFormat) return res.status(500).send('Unable to detect date format')
+
   const data = dates.map((d, i) => {return{date: d, shift: shifts[i]}})
 
   const results = data.map(entry => convertToCalendar(entry.date, entry.shift, rota_doc.shifts))
@@ -42,7 +46,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
                    prodId: {company: 'rooster', product: 'googlesheet_exporter', language: 'EN'}})
   results.forEach(result => {
     if (result) {
-      const event = toICSObject(result)
+      const event = toICSObject(result, dateFormat)
       if (event) cal.createEvent(event)
     }
   })
@@ -50,6 +54,20 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   res.status(200).send(cal.toString());
 };
 
+function detectDateFormat(dates: string[]): string | null{
+  const candidate_formats = [
+    'yyyy-MM-dd',
+    'dd/MM/yyyy',
+    'dd-MM-yyyy',
+  ]
+  for (const format of candidate_formats) {
+    dates.forEach(date => console.log(DateTime.fromFormat(date, format).isValid))
+    if (dates.every(date => DateTime.fromFormat(date, format).isValid)){
+      return format
+    } 
+  }
+  return null //no valid format found
+}
 
 async function authenticate(req: NextApiRequest, id: string, secret: string) {
   const {id: calendar_ics} = req.query
@@ -120,10 +138,10 @@ interface parsedResults {
   matchingShift: types.Shift | null,
   remainder: string}
 
-function toICSObject(entry: parsedResults): ICalEventData | null{
+function toICSObject(entry: parsedResults, inputDateFormat: string): ICalEventData | null{
     if (!entry.date) return null
 
-    const date = parseDate(entry.date)
+    const date = parseDate(entry.date, inputDateFormat)
     const shiftStartTime = entry.matchingShift?.start? parseTime(entry.matchingShift?.start) : '00:00'
 
     if (entry.matchingShift){

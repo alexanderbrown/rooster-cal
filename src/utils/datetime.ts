@@ -1,11 +1,9 @@
 import { DateTime } from "luxon"
 
-const dateFormat = 'dd/MM/yyyy'
+const outputDateFormat = 'dd/MM/yyyy'
 
-export function parseDate(date: string): string {
-    let [day,month,year] = date.split('-').join('/').split('/').map(entry => parseInt(entry))
-    if (year < 100) year += 2000
-    return DateTime.fromObject({day, month, year}).toFormat(dateFormat)
+export function parseDate(date: string, inputDateFormat: string): string {
+    return DateTime.fromFormat(date, inputDateFormat).toFormat(outputDateFormat)
 }
 
 export function parseTime(time: string): string {
