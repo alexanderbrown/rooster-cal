@@ -63,7 +63,6 @@ function detectDateFormat(dates: string[]): string | null{
     'dd-MM-yyyy',
   ]
   for (const format of candidate_formats) {
-    dates.forEach(date => console.log(DateTime.fromFormat(date, format).isValid))
     if (dates.every(date => DateTime.fromFormat(date, format).isValid)){
       return format
     } 
