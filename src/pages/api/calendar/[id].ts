@@ -62,7 +62,7 @@ function detectDateFormat(dates: string[]): string | null{
     'dd-MM-yyyy',
   ]
   for (const format of candidate_formats) {
-    if (dates.every(date => DateTime.fromFormat(date, format).isValid)){
+    if (dates.every(date => DateTime.fromFormat(date.slice(0, format.length), format).isValid)){
       return format
     } 
   }
