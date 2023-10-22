@@ -29,7 +29,6 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
 
   const {rota_doc, access_token} = await authenticate(req, GOOGLE_ID, GOOGLE_SECRET)
   if ((rota_doc===null) || (access_token===null)) return res.status(404).end()
-
   // sort by length, longest to shortest - so that we match the most specific pattern first
   const shiftPatterns = rota_doc.shifts.sort((a,b) => b.string.length - a.string.length)
   
@@ -144,10 +143,11 @@ function toICSObject(entry: parsedResults, inputDateFormat: string): ICalEventDa
     const date = parseDate(entry.date, inputDateFormat)
     const shiftStartTime = entry.matchingShift?.start? parseTime(entry.matchingShift?.start) : '00:00'
 
+    let newICSObject
     if (entry.matchingShift){
       if (entry.matchingShift.allday){
         const startTime = DateTime.fromFormat(date, 'dd/MM/yyyy')
-        return {
+        newICSObject =  {
           start: startTime.toISODate(),
           summary: entry.matchingShift.name + entry.remainder,
           allDay: true
@@ -155,7 +155,7 @@ function toICSObject(entry: parsedResults, inputDateFormat: string): ICalEventDa
       } else {
         const startTime = DateTime.fromFormat(`${date} ${shiftStartTime}`, 'dd/MM/yyyy HH:mm')
         const endTime = startTime.plus(Duration.fromObject({hours: entry.matchingShift.duration}))
-        return {
+        newICSObject = {
           start: startTime.toISO(),
           end: endTime.toISO(),
           summary: entry.matchingShift.name + entry.remainder,
@@ -165,10 +165,11 @@ function toICSObject(entry: parsedResults, inputDateFormat: string): ICalEventDa
       }
     } else {
       const startTime = DateTime.fromFormat(date, 'dd/MM/yyyy')
-      return {
+      newICSObject = {
         start: startTime.toISODate(),
         summary: entry.remainder,
         allDay: true
       }
     }
+    return newICSObject
 }

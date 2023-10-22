@@ -3,7 +3,8 @@ import { DateTime } from "luxon"
 const outputDateFormat = 'dd/MM/yyyy'
 
 export function parseDate(date: string, inputDateFormat: string): string {
-    return DateTime.fromFormat(date, inputDateFormat).toFormat(outputDateFormat)
+    return DateTime.fromFormat(date.slice(0, inputDateFormat.length), inputDateFormat)
+                   .toFormat(outputDateFormat)
 }
 
 export function parseTime(time: string): string {
