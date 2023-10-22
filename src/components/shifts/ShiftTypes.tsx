@@ -17,13 +17,11 @@ export default function ShiftTypes(props: ShiftTypesProps){
 
 
     async function removeShift(shift: types.Shift){
-        console.log(JSON.stringify(shift));
         const res = await fetch(`/api/shifts/${shift._id}`, {
             method: 'DELETE',
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(shift)
         })
-        console.log('res', res)
         if (res.status===200){
             props.setRota(prev => {if (prev) return {...prev, shifts: prev.shifts.filter(item => item !== shift)}})
         }

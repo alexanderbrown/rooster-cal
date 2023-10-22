@@ -37,7 +37,6 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
   const shifts = await getSheetColumnData({...rota_doc.toObject(), column: rota_doc.shifts_column, access_token: access_token})
   
   const dateFormat = detectDateFormat(dates)
-  console.log(dateFormat)
   if (!dateFormat) return res.status(500).send('Unable to detect date format')
 
   const data = dates.map((d, i) => {return{date: d, shift: shifts[i]}})
