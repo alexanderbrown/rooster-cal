@@ -27,9 +27,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
     }
 
     if (req.method==='DELETE'){
-        console.log(rota.shifts.length);
         (rota.shifts as any).pull(id) //TODO: This is hacky; find a way to type the fact that shifts will have a pull method
-        console.log(rota.shifts.length);
         return rota.save()
             .then(() => res.status(200).end())
             .catch(() => res.status(500).end())
