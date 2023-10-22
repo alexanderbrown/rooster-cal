@@ -2,9 +2,16 @@ import { NextApiRequest, NextApiResponse } from "next";
 
 import jwtDbConnect from "@/data/lib/connect";
 import { Rota} from "@/data/models/Rota";
+import { HydratedArraySubdocument, HydratedDocument } from "mongoose";
+import { Shift } from "@/types";
 
 export default async function handler (req:NextApiRequest, res:NextApiResponse) {
     const token = await jwtDbConnect(req)
+    const {id} = req.query
+
+    if (typeof id !== 'string' || id.length !== 24){
+        return res.status(400).end()
+    }
 
     if (!token) {
       return res.status(403).end()
@@ -19,15 +26,10 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
         return res.status(409).end()
     }
 
-    if (req.method==='PUT') {
-        rota.shifts.push(req.body)
-        return rota.save()
-            .then(() => res.status(200).end())
-            .catch(() => res.status(500).end())
-    } else if (req.method==='PATCH'){
-        console.dir(req.body, { depth: null });
-        const shift = (rota.shifts as any).id(req.body._id)
-        shift.set(req.body)
+    if (req.method==='DELETE'){
+        console.log(rota.shifts.length);
+        (rota.shifts as any).pull(id) //TODO: This is hacky; find a way to type the fact that shifts will have a pull method
+        console.log(rota.shifts.length);
         return rota.save()
             .then(() => res.status(200).end())
             .catch(() => res.status(500).end())

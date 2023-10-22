@@ -15,8 +15,12 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
       return res.status(403).send(token)
     }
 
+    if (typeof token.email !== 'string') {
+        return res.status(400).end()
+    }
+
     if (req.method==='GET') {
-        const docs: mongoose.Document[] = await Rota.find({user: token.email})
+        const docs: mongoose.Document[] = await Rota.find({user: token.email.toLowerCase()})
         const rota_docs: Object[] = docs.map((doc) => {
             let rota_doc = doc.toObject()
             rota_doc._id = rota_doc._id.toString()
@@ -29,7 +33,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
         } else {
             if (!token.email) return res.status(400).send('No user specified')
             const rota_doc: types.Rota = {
-                user: token.email, 
+                user: token.email.toLowerCase(), 
                 spreadsheet: '<Spreadsheet ID>', 
                 sheet: '<Sheet Name>',
                 shifts_column: 'B',
@@ -50,7 +54,7 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
             return res.status(200).json(rota_doc);
         }
       }  else if (req.method==='POST'){
-          const filter = {user: token.email}
+          const filter = {user: token.email.toLowerCase()}
           const update = {[req.body.field]: req.body.value}
           await Rota.findOneAndUpdate(filter, update, {upsert: true})
           res.status(200).end()

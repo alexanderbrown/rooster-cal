@@ -12,8 +12,12 @@ export default async function handler (req:NextApiRequest, res:NextApiResponse) 
     }
     const {email} = req.query
 
+    if (typeof email !== 'string'){
+        return res.status(400).end()
+    }
+
     await dbConnect()
-    const match = await AllowedUser.findOne({email: email})
+    const match = await AllowedUser.findOne({email: email.toLowerCase()})
     if (match) {
         return res.status(200).end()
     } else {

@@ -15,7 +15,7 @@ export default function Home() {
 
     useEffect(() => {
       const checkAllowed = async (email: string) => {
-        const res = await fetch (`/api/allowed-users/${email}`)
+        const res = await fetch (`/api/allowed-users/${email.toLowerCase()}`)
         setIsAllowedUser(res.status===200)
       }
 
